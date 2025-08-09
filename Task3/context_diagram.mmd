@@ -1,0 +1,17 @@
+C4Context
+title Контекстная диаграмма сервисов "Умный дом"
+
+Person(owner, "Собственник", "Владелец квартиры в жилом комплексе")
+
+System_Ext(smart_intercom, "Интеллектуальный домофон", "Система распознавания лиц и управления доступом")
+System_Ext(smart_barrier, "Интеллектуальный шлагбаум", "Система распознавания номеров и управления въездом")
+
+System_Boundary(propdev, "Система PropDevelopment") {
+    System(tenant_app, "Мобильное приложение", "Основное приложение для собственников")
+}
+
+Rel(owner, tenant_app, "Использует")
+Rel(tenant_app, smart_intercom, "Управляет доступом", "HTTPS/API")
+Rel(tenant_app, smart_barrier, "Управляет въездом", "HTTPS/API")
+Rel(smart_intercom, tenant_app, "Отправляет события", "WebSocket/REST")
+Rel(smart_barrier, tenant_app, "Отправляет события", "WebSocket/REST")
